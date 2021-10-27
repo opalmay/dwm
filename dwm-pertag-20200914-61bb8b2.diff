@@ -1,4 +1,23 @@
-diff a/dwm.c b/dwm.c	(rejected hunks)
+diff --git a/dwm.c b/dwm.c
+index 664c527..ac8e4ec 100644
+--- a/dwm.c
++++ b/dwm.c
+@@ -111,6 +111,7 @@ typedef struct {
+ 	void (*arrange)(Monitor *);
+ } Layout;
+ 
++typedef struct Pertag Pertag;
+ struct Monitor {
+ 	char ltsymbol[16];
+ 	float mfact;
+@@ -130,6 +131,7 @@ struct Monitor {
+ 	Monitor *next;
+ 	Window barwin;
+ 	const Layout *lt[2];
++	Pertag *pertag;
+ };
+ 
+ typedef struct {
 @@ -272,6 +274,15 @@ static Window root, wmcheckwin;
  /* configuration, allows nested code to access above variables */
  #include "config.h"
@@ -42,6 +61,36 @@ diff a/dwm.c b/dwm.c	(rejected hunks)
 +	}
 +
  	return m;
+ }
+ 
+@@ -967,7 +993,7 @@ grabkeys(void)
+ void
+ incnmaster(const Arg *arg)
+ {
+-	selmon->nmaster = MAX(selmon->nmaster + arg->i, 0);
++	selmon->nmaster = selmon->pertag->nmasters[selmon->pertag->curtag] = MAX(selmon->nmaster + arg->i, 0);
+ 	arrange(selmon);
+ }
+ 
+@@ -1502,9 +1528,9 @@ void
+ setlayout(const Arg *arg)
+ {
+ 	if (!arg || !arg->v || arg->v != selmon->lt[selmon->sellt])
+-		selmon->sellt ^= 1;
++		selmon->sellt = selmon->pertag->sellts[selmon->pertag->curtag] ^= 1;
+ 	if (arg && arg->v)
+-		selmon->lt[selmon->sellt] = (Layout *)arg->v;
++		selmon->lt[selmon->sellt] = selmon->pertag->ltidxs[selmon->pertag->curtag][selmon->sellt] = (Layout *)arg->v;
+ 	strncpy(selmon->ltsymbol, selmon->lt[selmon->sellt]->symbol, sizeof selmon->ltsymbol);
+ 	if (selmon->sel)
+ 		arrange(selmon);
+@@ -1523,7 +1549,7 @@ setmfact(const Arg *arg)
+ 	f = arg->f < 1.0 ? arg->f + selmon->mfact : arg->f - 1.0;
+ 	if (f < 0.05 || f > 0.95)
+ 		return;
+-	selmon->mfact = f;
++	selmon->mfact = selmon->pertag->mfacts[selmon->pertag->curtag] = f;
+ 	arrange(selmon);
  }
  
 @@ -1702,7 +1728,7 @@ tile(Monitor *m)
