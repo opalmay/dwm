@@ -51,7 +51,6 @@
 #define INTERSECT(x,y,w,h,m)    (MAX(0, MIN((x)+(w),(m)->wx+(m)->ww) - MAX((x),(m)->wx)) \
                                * MAX(0, MIN((y)+(h),(m)->wy+(m)->wh) - MAX((y),(m)->wy)))
 #define ISVISIBLE(C, M)         ((C->tags & M->tagset[M->seltags]))
-#define ISVISIBLE2(C)            ((C->tags & C->mon->tagset[C->mon->seltags]))
 #define LENGTH(X)               (sizeof X / sizeof X[0])
 #define MOUSEMASK               (BUTTONMASK|PointerMotionMask)
 #define WIDTH(X)                ((X)->w + 2 * (X)->bw)
@@ -218,12 +217,8 @@ static void monocle(Monitor *m);
 static void motionnotify(XEvent *e);
 static void movemouse(const Arg *arg);
 static Client *nexttiled(Client *c, Monitor *m);
-static Client *nexttiled2(Client *c);
 static void pop(Client *);
-static Client *prevtiled(Client *c);
 static void propertynotify(XEvent *e);
-static void pushdown(const Arg *arg);
-static void pushup(const Arg *arg);
 static void quit(const Arg *arg);
 static Monitor *recttomon(int x, int y, int w, int h);
 static void removesystrayicon(Client *i);
@@ -1412,12 +1407,7 @@ nexttiled(Client *c, Monitor *m)
 	for (; c && (c->isfloating || !ISVISIBLE(c, m)); c = c->next);
 	return c;
 }
-Client *
-nexttiled2(Client *c)
-{
-	for (; c && (c->isfloating || !ISVISIBLE2(c)); c = c->next);
-	return c;
-}
+
 void
 pop(Client *c)
 {
@@ -1425,16 +1415,6 @@ pop(Client *c)
 	attach(c);
 	focus(c);
 	arrange(c->mon);
-}
-
-Client *
-prevtiled(Client *c) {
-	Client *p, *r;
-
-	for(p = selmon->cl->clients, r = NULL; p && p != c; p = p->next)
-		if(!p->isfloating && ISVISIBLE2(p))
-			r = p;
-	return r;
 }
 
 void
@@ -1482,49 +1462,6 @@ propertynotify(XEvent *e)
 		if (ev->atom == netatom[NetWMWindowType])
 			updatewindowtype(c);
 	}
-}
-
-void
-pushdown(const Arg *arg) {
-	Client *sel = selmon->sel, *c;
-
-	if(!sel || sel->isfloating)
-		return;
-	if((c = nexttiled2(sel->next))) {
-		detach(sel);
-		sel->next = c->next;
-		c->next = sel;
-	} else {
-		detach(sel);
-		attach(sel);
-	}
-	focus(sel);
-	arrange(selmon);
-}
-
-void
-pushup(const Arg *arg) {
-	Client *sel = selmon->sel, *c;
-
-	if(!sel || sel->isfloating)
-		return;
-	if((c = prevtiled(sel))) {
-		detach(sel);
-		sel->next = c;
-		if(selmon->cl->clients == c)
-			selmon->cl->clients = sel;
-		else {
-			for(c = selmon->cl->clients; c->next != sel->next; c = c->next);
-			c->next = sel;
-		}
-	} else {
-		for(c = sel; c->next; c = c->next);
-		detach(sel);
-		sel->next = NULL;
-		c->next = sel;
-	}
-	focus(sel);
-	arrange(selmon);
 }
 
 void
