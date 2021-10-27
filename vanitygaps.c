@@ -811,7 +811,7 @@ tile(Monitor *m)
 
 	getfacts(m, mh, sh, &mfacts, &sfacts, &mrest, &srest);
 
-	for (i = 0, c = nexttiled2(m->cl->clients); c; c = nexttiled2(c->next), i++)
+	for (i = 0, c = nexttiled(m->cl->clients, m); c; c = nexttiled(c->next, m), i++)
 		if (i < m->nmaster) {
 			resize(c, mx, my, mw - (2*c->bw), mh * (c->cfact / mfacts) + (i < mrest ? 1 : 0) - (2*c->bw), 0);
 			my += HEIGHT(c) + ih;
