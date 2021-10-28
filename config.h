@@ -10,7 +10,11 @@ static const unsigned int gappov    = 5;       /* vert outer gap between windows
 static       int smartgaps          = 1;        /* 1 means no outer gap when there is only one window */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = {"FontAwesome:size=12", "Roboto:size=12" };
+// static const char *fonts[]          = {"FontAwesome:size=12", "Roboto:size=12" };
+static const char *fonts[]          = {  "Roboto:size=12",
+"Noto Color Emoji:pixelsize=12:antialias=true:autohint=true",
+"-*-dejavu sans mono-medium-r-normal-*-10-*-*-*-*-*-*-*"
+};
 static const char dmenufont[]       = "monospace:size=10";
 static const char col_gray1[]       = "#222222";
 static const char col_gray2[]       = "#444444";
@@ -92,6 +96,7 @@ static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont,
 static const char *termcmd[]  = { "alacritty", NULL };
 static const char *librewolf[]  = { "librewolf", NULL };
 static const char *brave[]  = { "brave", NULL };
+static const char *roficlip[]  = { "roficlip", NULL };
 static const char *applauncher[] = {"rofi", "-modi", "drun", "-show", "drun"};
 
 
@@ -108,7 +113,8 @@ static Key keys[] = {
   { Mod1Mask,                     XK_F1,      spawn,          {.v = applauncher } },
   { 0,                            XK_Print,   spawn,          SHCMD("maim -s ~/Pictures/Screenshots/$(date +%s).png") },
   { MODKEY,                       XK_Print,   spawn,          SHCMD("flameshot gui") },
-  { Mod1Mask,                     XK_v,       spawn,          SHCMD("roficlip") },
+  { Mod1Mask,                     XK_v,      spawn,          {.v = roficlip } },
+  // { Mod1Mask,                     XK_v,       spawn,          SHCMD("roficlip") },
   { Mod1Mask|ControlMask,         XK_x,       spawn,          SHCMD("xkill") },
   { Mod1Mask|ControlMask|ShiftMask,XK_Delete, spawn,          SHCMD("htop") },
 	// { 0,                       XF86XK_AudioLowerVolume, spawn, {.v = downvol } },
