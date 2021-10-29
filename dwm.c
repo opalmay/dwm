@@ -827,17 +827,23 @@ createmon(void)
 	m->lt[1] = &layouts[1 % LENGTH(layouts)];
 	strncpy(m->ltsymbol, layouts[0].symbol, sizeof m->ltsymbol);
 
-m->pertag = ecalloc(1, sizeof(Pertag));
-m->pertag->curtag = m->pertag->prevtag = 1;
-
-for (j = 0; j <= LENGTH(tags); j++) {
-	m->pertag->nmasters[j] = m->nmaster;
-	m->pertag->mfacts[j] = m->mfact;
-	m->pertag->ltidxs[j][0] = m->lt[0];
-	m->pertag->ltidxs[j][1] = m->lt[1];
-	m->pertag->sellts[j] = m->sellt;
-	m->pertag->showbars[j] = m->showbar;
-}
+  /* modified pertag logic to work with singletagset */
+  if (mons) {
+    m->pertag = mons->pertag;
+    m->pertag->curtag = m->pertag->prevtag = 1;
+  }
+  else {
+    m->pertag = ecalloc(1, sizeof(Pertag));
+    m->pertag->curtag = m->pertag->prevtag = 1;
+    for (j = 0; j <= LENGTH(tags); j++) {
+      m->pertag->nmasters[j] = m->nmaster;
+      m->pertag->mfacts[j] = m->mfact;
+      m->pertag->ltidxs[j][0] = m->lt[0];
+      m->pertag->ltidxs[j][1] = m->lt[1];
+      m->pertag->sellts[j] = m->sellt;
+      m->pertag->showbars[j] = m->showbar;
+    }
+  }
 
 	return m;
 }
