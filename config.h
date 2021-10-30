@@ -22,13 +22,19 @@ static const char col_gray3[]       = "#bbbbbb";
 static const char col_gray4[]       = "#eeeeee";
 static const char col_cyan[]        = "#005577";
 
-static const char col_blue[]        = "#5e81ac";
+static const char col_blue[]        = "#6790EB";
 static const char col_dark[]        = "#1f2227";
 static const char white[]           = "#ffffff";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { white, col_dark, col_gray2 },
 	[SchemeSel]  = { white, col_dark,  col_blue  },
+ 	[SchemeStatus]  = { white, col_dark, col_gray2  }, // Statusbar right {text,background,not used but cannot be empty}
+	[SchemeTagsSel]  = { white, col_blue,  "#000000"  }, // Tagbar left selected {text,background,not used but cannot be empty}
+  [SchemeTagsNorm]  = { white, col_dark,  "#000000"  }, // Tagbar left unselected {text,background,not used but cannot be empty}
+  [SchemeInfoSel]  = { white, col_dark, col_gray2 }, // infobar middle  selected {text,background,not used but cannot be empty}
+  [SchemeInfoNorm]  = { white, col_dark, col_gray2 }, // infobar middle  unselected {text,background,not used but cannot be empty}
+
 };
 static const char ptagf[] = "[%s %s]";	/* format of a tag label */
 static const char etagf[] = "[%s]";	/* format of an empty tag */
