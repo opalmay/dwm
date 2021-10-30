@@ -28,9 +28,9 @@ static const char white[]           = "#ffffff";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { white, col_dark, col_gray2 },
-	[SchemeSel]  = { white, col_blue,  "#000000" },
+	[SchemeSel]  = { white, col_blue,  col_blue },
   [SchemeTabActive]  = { white, col_dark,  "#000000" },
-	[SchemeTabInactive]  = { white, col_blue,  "#000000" },
+	[SchemeTabInactive]  = { white, col_dark,  "#000000" },
  	[SchemeStatus]  = { white, col_dark, col_gray2  }, // Statusbar right {text,background,not used but cannot be empty}
 	[SchemeTagsSel]  = { white, col_blue,  "#000000"  }, // Tagbar left selected {text,background,not used but cannot be empty}
   [SchemeTagsNorm]  = { white, col_dark,  "#000000"  }, // Tagbar left unselected {text,background,not used but cannot be empty}
