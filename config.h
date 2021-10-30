@@ -63,14 +63,7 @@ static const unsigned int systrayonleft = 0;   	/* 0: systray in the right corne
 static const unsigned int systrayspacing = 2;   /* systray spacing */
 static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display systray on the first monitor, False: display systray on the last monitor*/
 static const int showsystray        = 1;     /* 0 means no systray */
-static const int lockfullscreen = 0; /* 1 will force focus on the fullscreen window */
-
- /*   Display modes of the tab bar: never shown, always shown, shown only in  */
- /*   monocle mode in presence of several windows.                            */
- /*   A mode can be disabled by moving it after the showtab_nmodes end marker */
- enum showtab_modes { showtab_never, showtab_auto, showtab_nmodes, showtab_always};
- static const int showtab            = showtab_auto; /* Default tab bar show mode  */
-  static const Bool toptab            = True;         /* False means bottom tab bar */
+static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen window */
 
 static const char *upvol[]   = { "/usr/bin/pactl", "set-sink-volume", "0", "+5%",     NULL };
 static const char *downvol[] = { "/usr/bin/pactl", "set-sink-volume", "0", "-5%",     NULL };
@@ -161,7 +154,7 @@ static Key keys[] = {
 	{ MODKEY|ControlMask,   	    	XK_comma,  cyclelayout,    {.i = -1 } },
 	{ MODKEY|ControlMask,           XK_period, cyclelayout,    {.i = +1 } },
 	{ MODKEY,                       XK_s,      togglefloating, {0} },
-  { MODKEY, XK_w, tabmode, {-1} },
+
 	{ MODKEY,              XK_bracketright,           shiftview,  { .i = +1 } },
 	{ MODKEY,              XK_bracketleft,           shiftview,  { .i = -1 } },
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
@@ -197,6 +190,5 @@ static Button buttons[] = {
 	{ ClkTagBar,            0,              Button3,        toggleview,     {0} },
 	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
 	{ ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
-  { ClkTabBar, 0, Button1, focuswin, {0} },
 };
 
