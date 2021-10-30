@@ -28,7 +28,9 @@ static const char white[]           = "#ffffff";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { white, col_dark, col_gray2 },
-	[SchemeSel]  = { white, col_dark,  col_blue  },
+	[SchemeSel]  = { white, col_blue,  "#000000" },
+  [SchemeTabActive]  = { white, col_dark,  "#000000" },
+	[SchemeTabInactive]  = { white, col_blue,  "#000000" },
  	[SchemeStatus]  = { white, col_dark, col_gray2  }, // Statusbar right {text,background,not used but cannot be empty}
 	[SchemeTagsSel]  = { white, col_blue,  "#000000"  }, // Tagbar left selected {text,background,not used but cannot be empty}
   [SchemeTagsNorm]  = { white, col_dark,  "#000000"  }, // Tagbar left unselected {text,background,not used but cannot be empty}
@@ -64,6 +66,15 @@ static const unsigned int systrayspacing = 2;   /* systray spacing */
 static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display systray on the first monitor, False: display systray on the last monitor*/
 static const int showsystray        = 1;     /* 0 means no systray */
 static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen window */
+
+/* Bartabgroups properties */
+#define BARTAB_BORDERS 1       // 0 = off, 1 = on
+#define BARTAB_BOTTOMBORDER 1  // 0 = off, 1 = on
+#define BARTAB_TAGSINDICATOR 1 // 0 = off, 1 = on if >1 client/view tag, 2 = always on
+#define BARTAB_TAGSPX 5        // # pixels for tag grid boxes
+#define BARTAB_TAGSROWS 3      // # rows in tag grid (9 tags, e.g. 3x3)
+static void (*bartabmonfns[])(Monitor *) = { monocle /* , customlayoutfn */ };
+static void (*bartabfloatfns[])(Monitor *) = { NULL /* , customlayoutfn */ };
 
 static const char *upvol[]   = { "/usr/bin/pactl", "set-sink-volume", "0", "+5%",     NULL };
 static const char *downvol[] = { "/usr/bin/pactl", "set-sink-volume", "0", "-5%",     NULL };
