@@ -78,6 +78,7 @@ static const char *mutevol[] = { "/usr/bin/pactl", "set-sink-mute",   "0", "togg
 #define FORCE_VSPLIT 1  /* nrowgrid layout: force two clients to always split vertically */
 #include "vanitygaps.c"
 #include "shiftview.c"
+#include <X11/XF86keysym.h>
 static const Layout layouts[] = {
 	/* symbol     arrange function */
 	{ "[]=",      tile },    /* first entry is default */
@@ -131,13 +132,13 @@ static Key keys[] = {
   { Mod1Mask,                     XK_F1,      spawn,          {.v = applauncher } },
   { 0,                            XK_Print,   spawn,          SHCMD("maim -s ~/Pictures/Screenshots/$(date +%s).png") },
   { MODKEY,                       XK_Print,   spawn,          SHCMD("flameshot gui") },
-  { MODKEY,                       XK_n,   spawn,          SHCMD("feh --bg-fill --randomize ~/Documents/wallpapers") },
+  { MODKEY,                       XK_n,       spawn,          SHCMD("feh --bg-fill --randomize ~/Documents/wallpapers") },
   { MODKEY,                       XK_v,       spawn,          {.v = roficlip } },
   { Mod1Mask|ControlMask,         XK_x,       spawn,          SHCMD("xkill") },
   { Mod1Mask|ControlMask|ShiftMask,XK_Delete, spawn,          SHCMD("htop") },
-	// { 0,                       XF86XK_AudioLowerVolume, spawn, {.v = downvol } },
-	// { 0,                       XF86XK_AudioMute, spawn, {.v = mutevol } },
-	// { 0,                       XF86XK_AudioRaiseVolume, spawn, {.v = upvol   } },
+	{ 0,                       XF86XK_AudioLowerVolume, spawn, {.v = downvol } },
+	{ 0,                       XF86XK_AudioMute, spawn, {.v = mutevol } },
+	{ 0,                       XF86XK_AudioRaiseVolume, spawn, {.v = upvol   } },
 
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
