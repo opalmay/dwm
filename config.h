@@ -65,9 +65,6 @@ static const unsigned int systrayspacing = 2;   /* systray spacing */
 static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display systray on the first monitor, False: display systray on the last monitor*/
 static const int showsystray        = 1;     /* 0 means no systray */
 
-static const char *upvol[]   = { "/usr/bin/pactl", "set-sink-volume", "0", "+5%",     NULL };
-static const char *downvol[] = { "/usr/bin/pactl", "set-sink-volume", "0", "-5%",     NULL };
-static const char *mutevol[] = { "/usr/bin/pactl", "set-sink-mute",   "0", "toggle",  NULL };
 #define FORCE_VSPLIT 1  /* nrowgrid layout: force two clients to always split vertically */
 #include "vanitygaps.c"
 #include "shiftview.c"
@@ -101,6 +98,7 @@ static const Layout layouts[] = {
 
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
+#define BARSHCMD(cmd, signal) SHCMD(cmd "&& pkill -RTMIN+" signal " dwmblocks")
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
@@ -110,7 +108,6 @@ static const char *librewolf[]  = { "librewolf", NULL };
 static const char *brave[]  = { "brave", NULL };
 static const char *roficlip[]  = { "roficlip", NULL };
 static const char *applauncher[] = {"rofi", "-modi", "drun", "-show", "drun"};
-
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -128,10 +125,10 @@ static Key keys[] = {
   { MODKEY,                       XK_n,       spawn,          SHCMD("feh --bg-fill --randomize ~/Documents/wallpapers") },
   { MODKEY,                       XK_v,       spawn,          {.v = roficlip } },
   { Mod1Mask|ControlMask,         XK_x,       spawn,          SHCMD("xkill") },
-  { Mod1Mask|ControlMask|ShiftMask,XK_Delete, spawn,          SHCMD("htop") },
-	{ 0,                       XF86XK_AudioLowerVolume, spawn, {.v = downvol } },
-	{ 0,                       XF86XK_AudioMute, spawn, {.v = mutevol } },
-	{ 0,                       XF86XK_AudioRaiseVolume, spawn, {.v = upvol   } },
+  { Mod1Mask|ControlMask,         XK_Delete,  spawn,          SHCMD("htop") },
+	{ 0,                       XF86XK_AudioRaiseVolume, spawn, BARSHCMD("pactl set-sink-volume 0 +5%", "10") },
+	{ 0,                       XF86XK_AudioLowerVolume, spawn, BARSHCMD("pactl set-sink-volume 0 -5%", "10") },
+	{ 0,                       XF86XK_AudioMute, spawn, BARSHCMD("pactl set-sink-mute 0 toggle", "10") },
   // { Mod1Mask|ShiftMask,         0,       spawn,          SHCMD("pkill -RTMIN+30 dwmblocks") },
 
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
@@ -157,8 +154,8 @@ static Key keys[] = {
   { MODKEY,                       XK_f,      togglefullscreen, {0} },
  	{ MODKEY|ShiftMask,             XK_f,      togglefakefullscreen, {0} },
 
-	{ MODKEY,              XK_bracketright,           shiftview,  { .i = +1 } },
-	{ MODKEY,              XK_bracketleft,           shiftview,  { .i = -1 } },
+	{ MODKEY,                 XK_bracketright, shiftview,  { .i = +1 } },
+	{ MODKEY,                 XK_bracketleft,  shiftview,  { .i = -1 } },
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
 	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
 	{ MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
