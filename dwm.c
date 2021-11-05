@@ -2815,6 +2815,13 @@ view(const Arg *arg)
 			m->sel = selmon->sel;
 			m->seltags ^= 1;
 			m->tagset[m->seltags] = selmon->tagset[selmon->seltags];
+
+      m->nmaster = m->pertag->nmasters[m->pertag->curtag];
+      m->mfact = m->pertag->mfacts[m->pertag->curtag];
+      m->sellt = m->pertag->sellts[m->pertag->curtag];
+      m->lt[m->sellt] = m->pertag->ltidxs[m->pertag->curtag][m->sellt];
+      m->lt[m->sellt^1] = m->pertag->ltidxs[m->pertag->curtag][m->sellt^1];
+            
 			attachclients(m);
 			arrange(m);
 			break;
@@ -2822,7 +2829,7 @@ view(const Arg *arg)
 	selmon->seltags ^= 1; /* toggle sel tagset */
 	if (arg->ui & TAGMASK){
 		selmon->tagset[selmon->seltags] = arg->ui & TAGMASK;
-    		selmon->pertag->prevtag = selmon->pertag->curtag;
+   	selmon->pertag->prevtag = selmon->pertag->curtag;
 
 		if (arg->ui == ~0)
 			selmon->pertag->curtag = 0;
