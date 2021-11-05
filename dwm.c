@@ -1701,12 +1701,26 @@ void
 resizeclient(Client *c, int x, int y, int w, int h)
 {
 	XWindowChanges wc;
+	unsigned int n;
+	Client *nbc;
 
 	c->oldx = c->x; c->x = wc.x = x;
 	c->oldy = c->y; c->y = wc.y = y;
 	c->oldw = c->w; c->w = wc.width = w;
 	c->oldh = c->h; c->h = wc.height = h;
 	wc.border_width = c->bw;
+
+	for (n = 0, nbc = nexttiled(selmon->cl->clients, c->mon); nbc; nbc = nexttiled(nbc->next, c->mon), n++);
+
+	if (c->isfloating || selmon->lt[selmon->sellt]->arrange == NULL) {
+	} else {
+		if (selmon->lt[selmon->sellt]->arrange == monocle || n == 1) {
+			wc.border_width = 0;
+			c->w = wc.width += c->bw * 2;
+			c->h = wc.height += c->bw * 2;
+		}
+	}
+
 	XConfigureWindow(dpy, c->win, CWX|CWY|CWWidth|CWHeight|CWBorderWidth, &wc);
 	configure(c);
 	XSync(dpy, False);
@@ -2816,6 +2830,7 @@ view(const Arg *arg)
 			m->seltags ^= 1;
 			m->tagset[m->seltags] = selmon->tagset[selmon->seltags];
 
+      /* fix for singletagset+pertag */
       m->nmaster = m->pertag->nmasters[m->pertag->curtag];
       m->mfact = m->pertag->mfacts[m->pertag->curtag];
       m->sellt = m->pertag->sellts[m->pertag->curtag];
