@@ -139,6 +139,7 @@ static Key keys[] = {
 	{ 0,                       XF86XK_AudioMute, spawn,        BARSHCMD("pactl set-sink-mute 0 toggle", "10") },
   { Mod1Mask|ShiftMask,           0,         spawn,          SHCMD("pkill -RTMIN+30 dwmblocks") },
 
+	{ MODKEY,                       XK_f,      togglefullscr,  {0} },
 	// { MODKEY,                       XK_l,      focusstack,     {.i = +1 } },
 	// { MODKEY,                       XK_h,      focusstack,     {.i = -1 } },
   { MODKEY,                       XK_k,      focusstack,     {.i = +1 } },
@@ -158,7 +159,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_Tab,    view,           {0} },
 	{ MODKEY,                       XK_q,      killclient,     {0} },
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
-	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[2]} },
+	// { MODKEY,                       XK_f,      setlayout,      {.v = &layouts[2]} },
 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[1]} },
 	{ MODKEY,                       XK_space,  setlayout,      {0} },
 	{ MODKEY|ControlMask,   	    	XK_comma,  cyclelayout,    {.i = -1 } },
@@ -173,8 +174,6 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
 	{ MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
 	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
-	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
  	{ MODKEY,                       XK_w,      tabmode,        {-1} },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)

@@ -271,9 +271,9 @@ static void spawn(const Arg *arg);
 static void tabmode(const Arg *arg);
 static Monitor *systraytomon(Monitor *m);
 static void tag(const Arg *arg);
-static void tagmon(const Arg *arg);
 static void togglebar(const Arg *arg);
 static void togglefloating(const Arg *arg);
+static void togglefullscr(const Arg *arg);
 static void toggletag(const Arg *arg);
 static void toggleview(const Arg *arg);
 static void unfocus(Client *c, int setfocus);
@@ -2319,14 +2319,6 @@ tag(const Arg *arg)
 }
 
 void
-tagmon(const Arg *arg)
-{
-	if (!selmon->sel || !mons->next)
-		return;
-	sendmon(selmon->sel, dirtomon(arg->i));
-}
-
-void
 togglebar(const Arg *arg)
 {
   selmon->showbar = selmon->pertag->showbars[selmon->pertag->curtag] = !selmon->showbar;
@@ -2368,6 +2360,13 @@ togglefloating(const Arg *arg)
 		resize(selmon->sel, selmon->sel->x, selmon->sel->y,
 			selmon->sel->w, selmon->sel->h, 0);
 	arrange(selmon);
+}
+
+void
+togglefullscr(const Arg *arg)
+{
+  if(selmon->sel)
+    setfullscreen(selmon->sel, !selmon->sel->isfullscreen);
 }
 
 void
@@ -2888,6 +2887,7 @@ view(const Arg *arg)
 	int i;
 	unsigned int tmptag;
 
+  Client *c1 = NULL, *c2 = NULL;
 	Monitor *m;
 	unsigned int newtagset = selmon->tagset[selmon->seltags ^ 1];
 	if ((arg->ui & TAGMASK) == selmon->tagset[selmon->seltags])
@@ -2895,8 +2895,17 @@ view(const Arg *arg)
 	/* swap tags when trying to display a tag from another monitor */
 	if (arg->ui & TAGMASK)
 		newtagset = arg->ui & TAGMASK;
-for (m = mons; m; m = m->next)
+  for (m = mons; m; m = m->next)
 		if (m != selmon && newtagset & m->tagset[m->seltags]) {
+      /* fix for singletagset+fullscreen - if fullscreen remember and restore later */
+      if (selmon->sel && selmon->sel->isfullscreen) {
+        c1 = selmon->sel;
+        c1->isfullscreen = 0;
+      }
+      if (m->sel && m->sel->isfullscreen) {
+        c2 = m->sel;
+        c2->isfullscreen = 0;
+      }
       /* prevent displaying all tags (MODKEY-0) when multiple monitors
 			 * are connected */
 			if (newtagset & selmon->tagset[selmon->seltags])
@@ -2911,9 +2920,10 @@ for (m = mons; m; m = m->next)
 			m->sellt = m->pertag->sellts[m->pertag->curtag];
 			m->lt[m->sellt] = m->pertag->ltidxs[m->pertag->curtag][m->sellt];
 			m->lt[m->sellt^1] = m->pertag->ltidxs[m->pertag->curtag][m->sellt^1];
-            
+
 			attachclients(m);
 			arrange(m);
+
       break;
 		}
 	selmon->seltags ^= 1; /* toggle sel tagset */
@@ -2942,10 +2952,19 @@ for (m = mons; m; m = m->next)
 	if (selmon->showbar != selmon->pertag->showbars[selmon->pertag->curtag])
 		togglebar(NULL);
 
-  
 	attachclients(selmon);
 	arrange(selmon);
 	focus(NULL);
+  if (c1) {
+    c1->isfullscreen = 1;
+    resizeclient(c1, c1->mon->mx, c1->mon->my, c1->mon->mw, c1->mon->mh);
+    XRaiseWindow(dpy, c1->win);
+  }
+  if (c2) {
+    c2->isfullscreen = 1;
+    resizeclient(c2, c2->mon->mx, c2->mon->my, c2->mon->mw, c2->mon->mh);
+    XRaiseWindow(dpy, c2->win);
+  }
 }
 
 Client *
