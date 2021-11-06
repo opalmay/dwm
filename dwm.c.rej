@@ -1,4 +1,5 @@
 diff a/dwm.c b/dwm.c	(rejected hunks)
+<<<<<<< HEAD
 @@ -64,7 +64,7 @@ enum { NetSupported, NetWMName, NetWMState, NetWMCheck,
         NetWMFullscreen, NetActiveWindow, NetWMWindowType,
         NetWMWindowTypeDialog, NetClientList, NetLast }; /* EWMH atoms */
@@ -136,3 +137,27 @@ diff a/dwm.c b/dwm.c	(rejected hunks)
  		XSetClassHint(dpy, m->barwin, &ch);
  	}
  }
+=======
+@@ -702,7 +702,7 @@ drawbar(Monitor *m)
+ 	Client *c;
+ 
+ 	/* draw status first so it can be overdrawn by tags later */
+-	if (m == selmon) { /* status is only drawn on selected monitor */
++	if (m == selmon || 1) { /* status is only drawn on selected monitor */
+ 		drw_setscheme(drw, scheme[SchemeNorm]);
+ 		sw = TEXTW(stext) - lrpad + 2; /* 2px right padding */
+ 		drw_text(drw, m->ww - sw, 0, sw, bh, 0, stext, 0);
+@@ -1987,9 +1987,11 @@ updatesizehints(Client *c)
+ void
+ updatestatus(void)
+ {
++	Monitor* m;
+ 	if (!gettextprop(root, XA_WM_NAME, stext, sizeof(stext)))
+ 		strcpy(stext, "dwm-"VERSION);
+-	drawbar(selmon);
++	for(m = mons; m; m = m->next)
++		drawbar(m);
+ }
+ 
+ void
+>>>>>>> parent of 5b9999e (fullscreen compilation)
