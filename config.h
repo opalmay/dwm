@@ -10,13 +10,6 @@ static const unsigned int gappov    = 5;       /* vert outer gap between windows
 static       int smartgaps          = 1;        /* 1 means no outer gap when there is only one window */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-/*  Display modes of the tab bar: never shown, always shown, shown only in  */
-/*  monocle mode in the presence of several windows.                        */
-/*  Modes after showtab_nmodes are disabled.                                */
-enum showtab_modes { showtab_never, showtab_auto, showtab_nmodes, showtab_always};
-static const int showtab			= showtab_auto;        /* Default tab bar show mode */
-static const int toptab				= True;               /* False means bottom tab bar */
-
 static const char *fonts[]          = { "JetBrains Mono Nerd Font:size=10" };
 // static const char *fonts[]          = {"FontAwesome:size=12", "Roboto:size=12" };
 // static const char *fonts[]          = {  "Roboto:size=12",
@@ -79,8 +72,8 @@ static const int lockfullscreen = 0; /* 1 will force focus on the fullscreen win
 #include <X11/XF86keysym.h>
 static const Layout layouts[] = {
 	/* symbol     arrange function */
-	{ "[M]",      monocle },
 	{ "[]=",      tile },    /* first entry is default */
+	{ "[M]",      monocle },
   { "[@]",      spiral },
 	{ "[\\]",     dwindle },
 	{ "H[]",      deck },
@@ -174,7 +167,6 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
 	{ MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
 	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
- 	{ MODKEY,                       XK_w,      tabmode,        {-1} },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
@@ -206,6 +198,5 @@ static Button buttons[] = {
 	{ ClkTagBar,            0,              Button3,        toggleview,     {0} },
 	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
 	{ ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
-  { ClkTabBar,            0,              Button1,        focuswin,       {0} },
 };
 
