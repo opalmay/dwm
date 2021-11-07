@@ -2902,7 +2902,7 @@ view(const Arg *arg)
         c1 = selmon->sel;
         c1->isfullscreen = 0;
       }
-      if (m->sel && m->sel->isfullscreen) {
+     if (m->sel && m->sel->isfullscreen) {
         c2 = m->sel;
         c2->isfullscreen = 0;
       }
@@ -2942,7 +2942,6 @@ view(const Arg *arg)
 		selmon->pertag->prevtag = selmon->pertag->curtag;
 		selmon->pertag->curtag = tmptag;
 	}
-
 	selmon->nmaster = selmon->pertag->nmasters[selmon->pertag->curtag];
 	selmon->mfact = selmon->pertag->mfacts[selmon->pertag->curtag];
 	selmon->sellt = selmon->pertag->sellts[selmon->pertag->curtag];
@@ -2955,7 +2954,7 @@ view(const Arg *arg)
 	attachclients(selmon);
 	arrange(selmon);
 	focus(NULL);
-  if (c1) {
+  if (c1 || ((c1 = selmon->sel) && c1->isfullscreen)) {
     c1->isfullscreen = 1;
     resizeclient(c1, c1->mon->mx, c1->mon->my, c1->mon->mw, c1->mon->mh);
     XRaiseWindow(dpy, c1->win);
