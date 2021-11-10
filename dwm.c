@@ -643,7 +643,7 @@ buttonpress(XEvent *e)
 			arg.ui = 1 << i;
 		} else if (ev->x < x + blw)
 			click = ClkLtSymbol;
-		else if (ev->x > (x = selmon->ww - (int)TEXTW(stext) - getsystraywidth())) {
+		else if (ev->x > (x = selmon->ww - (int)TEXTW(stext))) {
 			click = ClkStatusText;
     
 			char *text = rawstext;
@@ -665,6 +665,7 @@ buttonpress(XEvent *e)
 		}
     else // Focus clicked tab bar item
 			bartabcalculate(selmon, x, TEXTW(stext) - lrpad + 2, ev->x, battabclick);
+			// bartabcalculate(selmon, x, TEXTW(stext) - lrpad + 2 + getsystraywidth(), ev->x, battabclick);
 	} else if ((c = wintoclient(ev->window))) {
 		focus(c);
 		restack(selmon);
@@ -1099,9 +1100,9 @@ resizebarwin(m);
 	x = drw_text(drw, x, 0, w, bh, lrpad / 2, m->ltsymbol, 0);
 
 	// Draw bartabgroups
-	drw_rect(drw, x, 0, m->ww - tw - x, bh, 1, 1);
+	drw_rect(drw, x, 0, m->ww - tw - x - stw, bh, 1, 1);
 	if ((w = m->ww - tw - stw - x) > bh) {
-    bartabcalculate(m, x, tw, -1, bartabdraw);
+    bartabcalculate(m, x, tw + stw, -1, bartabdraw);
 		if (BARTAB_BOTTOMBORDER) {
 			drw_setscheme(drw, scheme[SchemeTabActive]);
 			drw_rect(drw, 0, bh - 1, m->ww, 1, 1, 0);

@@ -10,7 +10,7 @@ static const unsigned int gappov    = 5;       /* vert outer gap between windows
 static       int smartgaps          = 1;        /* 1 means no outer gap when there is only one window */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = { "JetBrains Mono Nerd Font:size=10" };
+static const char *fonts[]          = { "JetBrains Mono Nerd Font:size=6" };
 // static const char *fonts[]          = {"FontAwesome:size=12", "Roboto:size=12" };
 // static const char *fonts[]          = {  "Roboto:size=12",
 // "Noto Color Emoji:pixelsize=12:antialias=true:autohint=true",
@@ -65,7 +65,7 @@ static const unsigned int systraypinning = 2;   /* 0: sloppy systray follows sel
 static const unsigned int systrayonleft = 0;   	/* 0: systray in the right corner, >0: systray on left of status text */
 static const unsigned int systrayspacing = 2;   /* systray spacing */
 static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display systray on the first monitor, False: display systray on the last monitor*/
-static const int showsystray        = 1;     /* 0 means no systray */
+static const int showsystray        = 0;     /* 0 means no systray */
 static const int lockfullscreen = 0; /* 1 will force focus on the fullscreen window */
 
 /* Bartabgroups properties */
