@@ -615,13 +615,17 @@ attachstack(Client *c)
 void
 buttonpress(XEvent *e)
 {
-	unsigned int i, x, click, occ = 0;
+	unsigned int i, x, click, occ = 0, stw = 0;
 	Arg arg = {0};
 	Client *c;
 	Monitor *m;
 	XButtonPressedEvent *ev = &e->xbutton;
 
 	click = ClkRootWin;
+
+  if (showsystray && selmon == systraytomon(selmon))
+      stw = getsystraywidth();
+
 	/* focus monitor if necessary */
 	if ((m = wintomon(ev->window)) && m != selmon) {
 		unfocus(selmon->sel, 1);
@@ -643,7 +647,7 @@ buttonpress(XEvent *e)
 			arg.ui = 1 << i;
 		} else if (ev->x < x + blw)
 			click = ClkLtSymbol;
-		else if (ev->x > (x = selmon->ww - (int)TEXTW(stext))) {
+		else if (ev->x > (x = selmon->ww - (int)TEXTW(stext) - stw)) {
 			click = ClkStatusText;
     
 			char *text = rawstext;
@@ -664,8 +668,8 @@ buttonpress(XEvent *e)
 			}
 		}
     else // Focus clicked tab bar item
-			bartabcalculate(selmon, x, TEXTW(stext) - lrpad + 2, ev->x, battabclick);
-			// bartabcalculate(selmon, x, TEXTW(stext) - lrpad + 2 + getsystraywidth(), ev->x, battabclick);
+			// bartabcalculate(selmon, x, TEXTW(stext) - lrpad + 2 , ev->x, battabclick);
+			bartabcalculate(selmon, x, TEXTW(stext) - lrpad + 2 + stw, ev->x, battabclick);
 	} else if ((c = wintoclient(ev->window))) {
 		focus(c);
 		restack(selmon);
