@@ -35,9 +35,6 @@ static const char *colors[][3]      = {
  	[SchemeStatus]  = { white, col_dark, col_gray2  }, // Statusbar right {text,background,not used but cannot be empty}
 	[SchemeTagsSel]  = { white, col_blue,  "#000000"  }, // Tagbar left selected {text,background,not used but cannot be empty}
   [SchemeTagsNorm]  = { white, col_dark,  "#000000"  }, // Tagbar left unselected {text,background,not used but cannot be empty}
-  [SchemeInfoSel]  = { white, col_dark, col_gray2 }, // infobar middle  selected {text,background,not used but cannot be empty}
-  [SchemeInfoNorm]  = { white, col_dark, col_gray2 }, // infobar middle  unselected {text,background,not used but cannot be empty}
-
 };
 static const char ptagf[] = "[%s %s]";	/* format of a tag label */
 static const char etagf[] = "[%s]";	/* format of an empty tag */
@@ -100,12 +97,12 @@ static const Layout layouts[] = {
 	{ NULL,       NULL },
 };
 
+	// { MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, 
 /* key definitions */
 #define MODKEY Mod4Mask
 #define TAGKEYS(KEY,TAG) \
 	{ MODKEY,                       KEY,      view,           {.ui = 1 << TAG} }, \
-	{ MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
-	{ MODKEY|ControlMask,             KEY,      tag,            {.ui = 1 << TAG} }, \
+	{ MODKEY|ControlMask,           KEY,      tag,            {.ui = 1 << TAG} }, \
 	{ MODKEY|ShiftMask,             KEY,      tagandview,     {.ui = 1 << TAG} }, \
 	{ MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} },
 
