@@ -647,7 +647,8 @@ buttonpress(XEvent *e)
 			arg.ui = 1 << i;
 		} else if (ev->x < x + blw)
 			click = ClkLtSymbol;
-		else if (ev->x > (x = selmon->ww - (int)TEXTW(stext) - stw)) {
+		else if (ev->x > selmon->ww - (int)TEXTW(stext) - stw) {
+      x = selmon->ww - (int)TEXTW(stext) - stw;
 			click = ClkStatusText;
     
 			char *text = rawstext;
@@ -668,7 +669,6 @@ buttonpress(XEvent *e)
 			}
 		}
     else // Focus clicked tab bar item
-			// bartabcalculate(selmon, x, TEXTW(stext) - lrpad + 2 , ev->x, battabclick);
 			bartabcalculate(selmon, x, TEXTW(stext) - lrpad + 2 + stw, ev->x, battabclick);
 	} else if ((c = wintoclient(ev->window))) {
 		focus(c);
