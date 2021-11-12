@@ -115,19 +115,16 @@ static const Layout layouts[] = {
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
-static const char *termcmd[]  = { "alacritty", NULL };
-static const char *librewolf[]  = { "chromium", NULL };
-static const char *brave[]  = { "librewolf", NULL };
-static const char *roficlip[]  = { "roficlip", NULL };
+static const char *termcmd[]  = { "st", NULL };
 static const char *applauncher[] = {"rofi", "-modi", "drun", "-show", "drun"};
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
-  { MODKEY,                       XK_b,      spawn,          {.v = librewolf } },
-  { MODKEY|ShiftMask,             XK_b,      spawn,          {.v = brave } },
-  { MODKEY,                       XK_r,      spawn,          SHCMD("alacritty -e ranger") },
+  { MODKEY,                       XK_b,      spawn,          SHCMD("chromium") },
+  { MODKEY|ShiftMask,             XK_b,      spawn,          SHCMD("librewolf") },
+  { MODKEY,                       XK_r,      spawn,          SHCMD("st -e ranger") },
   { MODKEY,                       XK_d,      spawn,          SHCMD("pcmanfm") },
 
 
@@ -135,9 +132,9 @@ static Key keys[] = {
   { 0,                            XK_Print,  spawn,          SHCMD("maim -s ~/Pictures/Screenshots/$(date +%s).png") },
   { MODKEY,                       XK_Print,  spawn,          SHCMD("flameshot gui") },
   { MODKEY,                       XK_n,      spawn,          SHCMD("feh --bg-fill --randomize ~/Documents/wallpapers") },
-  { MODKEY,                       XK_v,      spawn,          {.v = roficlip } },
+  { MODKEY,                       XK_v,      spawn,          SHCMD("roficlip") },
   { MODKEY|ControlMask,           XK_x,      spawn,          SHCMD("xkill") },
-  { Mod1Mask|ControlMask,         XK_Delete, spawn,          SHCMD("alacritty -e htop") },
+  { Mod1Mask|ControlMask,         XK_Delete, spawn,          SHCMD("st -e htop") },
 	{ 0,                       XF86XK_AudioRaiseVolume, spawn, BARSHCMD("pactl set-sink-volume 0 +5%", "10") },
 	{ 0,                       XF86XK_AudioLowerVolume, spawn, BARSHCMD("pactl set-sink-volume 0 -5%", "10") },
 	{ 0,                       XF86XK_AudioMute, spawn,        BARSHCMD("pactl set-sink-mute 0 toggle", "10") },
