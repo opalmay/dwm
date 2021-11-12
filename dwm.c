@@ -260,6 +260,7 @@ static void sigdwmblocks(const Arg *arg);
 static void spawn(const Arg *arg);
 static Monitor *systraytomon(Monitor *m);
 static void tag(const Arg *arg);
+static void tagandview(const Arg *arg);
 static void togglebar(const Arg *arg);
 static void togglefloating(const Arg *arg);
 static void togglefullscr(const Arg *arg);
@@ -2255,6 +2256,13 @@ tag(const Arg *arg)
 		focus(NULL);
 		arrange(selmon);
 	}
+}
+
+void
+tagandview(const Arg *arg)
+{
+  tag(arg);
+  view(arg);
 }
 
 void

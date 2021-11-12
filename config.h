@@ -105,7 +105,8 @@ static const Layout layouts[] = {
 #define TAGKEYS(KEY,TAG) \
 	{ MODKEY,                       KEY,      view,           {.ui = 1 << TAG} }, \
 	{ MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
-	{ MODKEY|ShiftMask,             KEY,      tag,            {.ui = 1 << TAG} }, \
+	{ MODKEY|ControlMask,             KEY,      tag,            {.ui = 1 << TAG} }, \
+	{ MODKEY|ShiftMask,             KEY,      tagandview,     {.ui = 1 << TAG} }, \
 	{ MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} },
 
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
@@ -138,7 +139,8 @@ static Key keys[] = {
 	{ 0,                       XF86XK_AudioRaiseVolume, spawn, BARSHCMD("pactl set-sink-volume 0 +5%", "10") },
 	{ 0,                       XF86XK_AudioLowerVolume, spawn, BARSHCMD("pactl set-sink-volume 0 -5%", "10") },
 	{ 0,                       XF86XK_AudioMute, spawn,        BARSHCMD("pactl set-sink-mute 0 toggle", "10") },
-  { Mod1Mask|ShiftMask,           0,         spawn,          SHCMD("pkill -RTMIN+30 dwmblocks") },
+  // { Mod1Mask|ShiftMask,           0,         spawn,          SHCMD("pkill -RTMIN+30 dwmblocks") },
+  { MODKEY|ShiftMask,             XK_equal,  spawn,          SHCMD("betterlockscreen -l dim") },
 
 	{ MODKEY,                       XK_f,      togglefullscr,  {0} },
 	// { MODKEY,                       XK_l,      focusstack,     {.i = +1 } },
@@ -169,10 +171,11 @@ static Key keys[] = {
   { MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
 	{ MODKEY,                       XK_e,      incnmaster,     {.i = -1 } },
 	
-	{ MODKEY,                 XK_bracketright, shiftview,  { .i = +1 } },
-	{ MODKEY,                 XK_bracketleft,  shiftview,  { .i = -1 } },
+	{ MODKEY,                 XK_bracketright, shiftview,      { .i = +1 } },
+	{ MODKEY,                 XK_bracketleft,  shiftview,      { .i = -1 } },
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
-	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
+	{ MODKEY|ShiftMask,             XK_0,      tagandview,     {.ui = ~0 } },
+	{ MODKEY|ControlMask,           XK_0,      tag,            {.ui = ~0 } },
 	{ MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
 	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
 	TAGKEYS(                        XK_1,                      0)
