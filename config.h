@@ -85,17 +85,17 @@ static const Layout layouts[] = {
 	{ "[M]",      monocle },
  	{ "[]=",      tile },    /* first entry is default */
   { "[@]",      spiral },
-	{ "[\\]",     dwindle },
+	// { "[\\]",     dwindle },
 	{ "H[]",      deck },
-	{ "TTT",      bstack },
-	{ "===",      bstackhoriz },
-	{ "HHH",      grid },
-	{ "###",      nrowgrid },
-	{ "---",      horizgrid },
-	{ ":::",      gaplessgrid },
+	// { "TTT",      bstack },
+	// { "===",      bstackhoriz },
+	// { "HHH",      grid },
+	// { "###",      nrowgrid },
+	// { "---",      horizgrid },
+	// { ":::",      gaplessgrid },
 	{ "|M|",      centeredmaster },
-	{ ">M>",      centeredfloatingmaster },
-	{ "><>",      NULL },    /* no layout function means floating behavior */
+	// { ">M>",      centeredfloatingmaster },
+	// { "><>",      NULL },    /* no layout function means floating behavior */
 	{ NULL,       NULL },
 };
 
@@ -126,7 +126,6 @@ static Key keys[] = {
   { MODKEY|ShiftMask,             XK_b,      spawn,          SHCMD("librewolf") },
   { MODKEY,                       XK_r,      spawn,          SHCMD("st -e ranger") },
   { MODKEY,                       XK_d,      spawn,          SHCMD("pcmanfm") },
-
 
   { Mod1Mask,                     XK_F1,     spawn,          {.v = applauncher } },
   { 0,                            XK_Print,  spawn,          SHCMD("maim -s ~/Pictures/Screenshots/$(date +%s).png") },
@@ -161,7 +160,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_Tab,    view,           {0} },
 	{ MODKEY,                       XK_q,      killclient,     {0} },
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[1]} },
-	// { MODKEY,                       XK_f,      setlayout,      {.v = &layouts[2]} },
+	{ MODKEY,                       XK_g,      setlayout,      {.v = &layouts[4]} },
 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                       XK_space,  setlayout,      {0} },
 	{ MODKEY|ControlMask,   	    	XK_comma,  cyclelayout,    {.i = -1 } },
