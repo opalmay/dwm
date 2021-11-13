@@ -23,18 +23,20 @@ static const char col_gray3[]       = "#bbbbbb";
 static const char col_gray4[]       = "#eeeeee";
 static const char col_cyan[]        = "#005577";
 
-static const char col_blue[]        = "#6790EB";
-static const char col_dark[]        = "#1f2227";
-static const char white[]           = "#ffffff";
+static const char col_dark[]        = "#5657F5";
+static const char col_light[]       = "#8be9fd";
+static const char col_background[]  = "#31313A";
+static const char col_background_light[]  = "#5657F5";
+static const char white[]           = "#f8f8f2";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
-	[SchemeNorm] = { white, col_dark, col_gray2 },
-	[SchemeSel]  = { white, col_blue,  col_blue },
-  [SchemeTabActive]  = { col_gray2, col_gray3,  col_gray2 },
-	[SchemeTabInactive]  = { col_gray1, "#D3D3D3",  col_gray1 },
- 	[SchemeStatus]  = { white, col_dark, col_gray2  }, // Statusbar right {text,background,not used but cannot be empty}
-	[SchemeTagsSel]  = { white, col_blue,  "#000000"  }, // Tagbar left selected {text,background,not used but cannot be empty}
-  [SchemeTagsNorm]  = { white, col_dark,  "#000000"  }, // Tagbar left unselected {text,background,not used but cannot be empty}
+	[SchemeNorm] = { white, col_background, col_background },
+	[SchemeSel]  = { white, col_background_light,  col_background_light },
+  [SchemeTabActive]  = { white, col_background_light,  col_background_light},
+	[SchemeTabInactive]  = { white, col_background,  col_background },
+ 	[SchemeStatus]  = { white, col_background, "#111111"  }, // Statusbar right {text,background,not used but cannot be empty}
+	[SchemeTagsSel]  = { white, col_dark,  "#111111"  }, // Tagbar left selected {text,background,not used but cannot be empty}
+  [SchemeTagsNorm]  = { white, col_background,  "#111111"  }, // Tagbar left unselected {text,background,not used but cannot be empty}
 };
 static const char ptagf[] = "[%s %s]";	/* format of a tag label */
 static const char etagf[] = "[%s]";	/* format of an empty tag */
@@ -133,9 +135,9 @@ static Key keys[] = {
   { MODKEY,                       XK_v,      spawn,          SHCMD("roficlip") },
   { MODKEY|ControlMask,           XK_x,      spawn,          SHCMD("xkill") },
   { Mod1Mask|ControlMask,         XK_Delete, spawn,          SHCMD("st -e htop") },
-	{ 0,                       XF86XK_AudioRaiseVolume, spawn, BARSHCMD("pactl set-sink-volume 0 +5%", "10") },
-	{ 0,                       XF86XK_AudioLowerVolume, spawn, BARSHCMD("pactl set-sink-volume 0 -5%", "10") },
-	{ 0,                       XF86XK_AudioMute, spawn,        BARSHCMD("pactl set-sink-mute 0 toggle", "10") },
+	{ 0,                       XF86XK_AudioRaiseVolume, spawn, BARSHCMD("pamixer --allow-boost -i 5", "10") },
+	{ 0,                       XF86XK_AudioLowerVolume, spawn, BARSHCMD("pamixer --allow-boost -d 5", "10") },
+	{ 0,                       XF86XK_AudioMute, spawn,        BARSHCMD("pamixer -t", "10") },
   // { Mod1Mask|ShiftMask,           0,         spawn,          SHCMD("pkill -RTMIN+30 dwmblocks") },
   { MODKEY|ShiftMask,             XK_equal,  spawn,          SHCMD("betterlockscreen -l dim") },
 

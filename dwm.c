@@ -456,8 +456,9 @@ bartabdraw(Monitor *m, Client *c, int unused, int x, int w, int groupactive) {
 	if (!c) return;
 	int i, nclienttags = 0, nviewtags = 0;
 
+//m->sel == c ? SchemeSel : (groupactive ? SchemeTabActive: SchemeTabInactive)
 	drw_setscheme(drw, scheme[
-		m->sel == c ? SchemeSel : (groupactive ? SchemeTabActive: SchemeTabInactive)
+		m->sel == c ? SchemeTabActive: SchemeTabInactive
 	]);
 	drw_text(drw, x, 0, w, bh, lrpad / 2, c->name, 0);
 
