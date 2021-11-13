@@ -29,7 +29,7 @@ static const char col_dark[]        = "#5657F5";
 static const char col_light[]       = "#8be9fd";
 static const char col_background[]  = "#31313A";
 static const char col_background_light[]  = "#5657F5";
-static const char white[]           = "#f8f8f2";
+static const char white[]           = "#ffffff";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { white, col_background, col_background },
