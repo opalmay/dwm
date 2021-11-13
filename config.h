@@ -10,6 +10,8 @@ static const unsigned int gappov    = 5;       /* vert outer gap between windows
 static       int smartgaps          = 1;        /* 1 means no outer gap when there is only one window */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
+#define ICONSIZE 16   /* icon size */
+#define ICONSPACING 5 /* space between icon and title */
 static const char *fonts[]          = { "JetBrains Mono Nerd Font:size=10" };
 // static const char *fonts[]          = {"FontAwesome:size=12", "Roboto:size=12" };
 // static const char *fonts[]          = {  "Roboto:size=12",
