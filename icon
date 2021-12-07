@@ -1,0 +1,361 @@
+dwm.c:	c->isfloating = 0;
+dwm.c:	c->tags = 0;
+dwm.c:	XGetClassHint(dpy, c->win, &ch);
+dwm.c:		if ((!r->title || strstr(c->name, r->title))
+dwm.c:			c->isfloating = r->isfloating;
+dwm.c:			c->tags |= r->tags;
+dwm.c:			for (m = mons; m && (m->tagset[m->seltags] & c->tags) == 0; m = m->next);
+dwm.c:				c->mon = m;
+dwm.c:	c->tags = c->tags & TAGMASK ? c->tags & TAGMASK : c->mon->tagset[c->mon->seltags];
+dwm.c:	Monitor *m = c->mon;
+dwm.c:		if (*x + *w + 2 * c->bw < 0)
+dwm.c:		if (*y + *h + 2 * c->bw < 0)
+dwm.c:		if (*x + *w + 2 * c->bw <= m->wx)
+dwm.c:		if (*y + *h + 2 * c->bw <= m->wy)
+dwm.c:	if (resizehints || c->isfloating || !c->mon->lt[c->mon->sellt]->arrange) {
+dwm.c:		baseismin = c->basew == c->minw && c->baseh == c->minh;
+dwm.c:			*w -= c->basew;
+dwm.c:			*h -= c->baseh;
+dwm.c:		if (c->mina > 0 && c->maxa > 0) {
+dwm.c:			if (c->maxa < (float)*w / *h)
+dwm.c:				*w = *h * c->maxa + 0.5;
+dwm.c:			else if (c->mina < (float)*h / *w)
+dwm.c:				*h = *w * c->mina + 0.5;
+dwm.c:			*w -= c->basew;
+dwm.c:			*h -= c->baseh;
+dwm.c:		if (c->incw)
+dwm.c:			*w -= *w % c->incw;
+dwm.c:		if (c->inch)
+dwm.c:			*h -= *h % c->inch;
+dwm.c:		*w = MAX(*w + c->basew, c->minw);
+dwm.c:		*h = MAX(*h + c->baseh, c->minh);
+dwm.c:		if (c->maxw)
+dwm.c:			*w = MIN(*w, c->maxw);
+dwm.c:		if (c->maxh)
+dwm.c:			*h = MIN(*h, c->maxh);
+dwm.c:	return *x != c->x || *y != c->y || *w != c->w || *h != c->h;
+dwm.c:	// drw_text(drw, x, 0, w, bh, lrpad / 2, c->name, 0);
+dwm.c:  drw_text(drw, x, 0, w, bh, lrpad / 2 + (c->icon ? c->icw + ICONSPACING : 0), c->name, 0);
+dwm.c:	if (c->icon)
+dwm.c:    drw_pic(drw, x + lrpad / 2, (bh - c->ich) / 2, c->icw, c->ich, c->icon);
+dwm.c:	if (c->isfloating) drw_rect(drw, x + 2, 2, 5, 5, 0, 0);
+dwm.c:		if ((c->tags >> i) & 1) { nclienttags++; }
+dwm.c:				BARTAB_TAGSPX, BARTAB_TAGSPX, (c->tags >> i) & 1, 0
+dwm.c:	for (i = 0, c = m->cl->clients; c; c = c->next) {
+dwm.c:		if (c->isfloating) { clientsnfloating++; continue; }
+dwm.c:	for (c = m->cl->clients, i = 0; c; c = c->next) {
+dwm.c:		} else if (!c->isfloating && (fulllayout || ((clientsnmaster == 0) ^ (clientsnstack == 0)))) {
+dwm.c:		} else if (i < m->nmaster && !c->isfloating) {
+dwm.c:		} else if (!c->isfloating) {
+dwm.c:	c->next = c->mon->cl->clients;
+dwm.c:	c->mon->cl->clients = c;
+dwm.c:	for (c = m->cl->clients; c; c = c->next)
+dwm.c:			if(c->tags & utags) {
+dwm.c:				c->tags = c->tags & m->tagset[m->seltags];
+dwm.c:			c->mon = m;
+dwm.c:	c->snext = c->mon->cl->stack;
+dwm.c:	c->mon->cl->stack = c;
+dwm.c:		for (c = m->cl->clients; c; c = c->next)
+dwm.c:			occ |= c->tags == 255 ? 0 : c->tags;
+dwm.c:			if (!(c->win = cme->data.l[2])) {
+dwm.c:			c->mon = selmon;
+dwm.c:			c->next = systray->icons;
+dwm.c:			if (!XGetWindowAttributes(dpy, c->win, &wa)) {
+dwm.c:			c->x = c->oldx = c->y = c->oldy = 0;
+dwm.c:			c->w = c->oldw = wa.width;
+dwm.c:			c->h = c->oldh = wa.height;
+dwm.c:			c->oldbw = wa.border_width;
+dwm.c:			c->bw = 0;
+dwm.c:			c->isfloating = True;
+dwm.c:			c->tags = 1;
+dwm.c:			XAddToSaveSet(dpy, c->win);
+dwm.c:			XSelectInput(dpy, c->win, StructureNotifyMask | PropertyChangeMask | ResizeRedirectMask);
+dwm.c:			XReparentWindow(dpy, c->win, systray->win, 0, 0);
+dwm.c:			XChangeWindowAttributes(dpy, c->win, CWBackPixel, &swa);
+dwm.c:			sendevent(c->win, netatom[Xembed], StructureNotifyMask, CurrentTime, XEMBED_EMBEDDED_NOTIFY, 0 , systray->win, XEMBED_EMBEDDED_VERSION);
+dwm.c:			sendevent(c->win, netatom[Xembed], StructureNotifyMask, CurrentTime, XEMBED_FOCUS_IN, 0 , systray->win, XEMBED_EMBEDDED_VERSION);
+dwm.c:			sendevent(c->win, netatom[Xembed], StructureNotifyMask, CurrentTime, XEMBED_WINDOW_ACTIVATE, 0 , systray->win, XEMBED_EMBEDDED_VERSION);
+dwm.c:			sendevent(c->win, netatom[Xembed], StructureNotifyMask, CurrentTime, XEMBED_MODALITY_ON, 0 , systray->win, XEMBED_EMBEDDED_VERSION);
+dwm.c:				|| (cme->data.l[0] == 2 /* _NET_WM_STATE_TOGGLE */ && !c->isfullscreen)));
+dwm.c:		if (c != selmon->sel && !c->isurgent)
+dwm.c:	ce.event = c->win;
+dwm.c:	ce.window = c->win;
+dwm.c:	ce.x = c->x;
+dwm.c:	ce.y = c->y;
+dwm.c:	ce.width = c->w;
+dwm.c:	ce.height = c->h;
+dwm.c:	ce.border_width = c->bw;
+dwm.c:	XSendEvent(dpy, c->win, False, StructureNotifyMask, (XEvent *)&ce);
+dwm.c:				for (c = m->cl->clients; c; c = c->next)
+dwm.c:					if (c->isfullscreen)
+dwm.c:			c->bw = ev->border_width;
+dwm.c:		else if (c->isfloating || !selmon->lt[selmon->sellt]->arrange) {
+dwm.c:			m = c->mon;
+dwm.c:				c->oldx = c->x;
+dwm.c:				c->x = m->mx + ev->x;
+dwm.c:				c->oldy = c->y;
+dwm.c:				c->y = m->my + ev->y;
+dwm.c:				c->oldw = c->w;
+dwm.c:				c->w = ev->width;
+dwm.c:				c->oldh = c->h;
+dwm.c:				c->h = ev->height;
+dwm.c:			if ((c->x + c->w) > m->mx + m->mw && c->isfloating)
+dwm.c:				c->x = m->mx + (m->mw / 2 - WIDTH(c) / 2); /* center in x direction */
+dwm.c:			if ((c->y + c->h) > m->my + m->mh && c->isfloating)
+dwm.c:				c->y = m->my + (m->mh / 2 - HEIGHT(c) / 2); /* center in y direction */
+dwm.c:				XMoveResizeWindow(dpy, c->win, c->x, c->y, c->w, c->h);
+dwm.c:	for (tc = &c->mon->cl->clients; *tc && *tc != c; tc = &(*tc)->next);
+dwm.c:	*tc = c->next;
+dwm.c:	for (tc = &c->mon->cl->stack; *tc && *tc != c; tc = &(*tc)->snext);
+dwm.c:	*tc = c->snext;
+dwm.c:	if (c == c->mon->sel) {
+dwm.c:		for (t = c->mon->cl->stack; t && !ISVISIBLE(t, c->mon); t = t->snext);
+dwm.c:		c->mon->sel = t;
+dwm.c:	for (c = m->cl->clients; c; c = c->next) {
+dwm.c:		occ |= c->tags;
+dwm.c:		if (c->isurgent)
+dwm.c:			urg |= c->tags;
+dwm.c:			if (!masterclientontag[i] && c->tags & (1<<i)) {
+dwm.c:				XGetClassHint(dpy, c->win, &ch);
+dwm.c:	m = c ? c->mon : wintomon(ev->window);
+dwm.c:		for (c = selmon->cl->stack; c && !ISVISIBLE(c, selmon); c = c->snext);
+dwm.c:		if (c->mon != selmon)
+dwm.c:			selmon = c->mon;
+dwm.c:		if (c->isurgent)
+dwm.c:		XSetWindowBorder(dpy, c->win, scheme[SchemeSel][ColBorder].pixel);
+dwm.c:		for (c = selmon->sel->next; c && !ISVISIBLE(c, selmon); c = c->next);
+dwm.c:			for (c = selmon->cl->clients; c && !ISVISIBLE(c, selmon); c = c->next);
+dwm.c:	if (XGetWindowProperty(dpy, c->win, prop, 0L, sizeof atom, False, req,
+dwm.c:		XUngrabButton(dpy, AnyButton, AnyModifier, c->win);
+dwm.c:			XGrabButton(dpy, AnyButton, AnyModifier, c->win, False,
+dwm.c:						c->win, False, BUTTONMASK,
+dwm.c:	c->win = w;
+dwm.c:	c->x = c->oldx = wa->x;
+dwm.c:	c->y = c->oldy = wa->y;
+dwm.c:	c->w = c->oldw = wa->width;
+dwm.c:	c->h = c->oldh = wa->height;
+dwm.c:	c->oldbw = wa->border_width;
+dwm.c:	c->cfact = 1.0;
+dwm.c:		c->mon = t->mon;
+dwm.c:		c->tags = t->tags;
+dwm.c:		c->mon = selmon;
+dwm.c:	if (c->x + WIDTH(c) > c->mon->mx + c->mon->mw)
+dwm.c:		c->x = c->mon->mx + c->mon->mw - WIDTH(c);
+dwm.c:	if (c->y + HEIGHT(c) > c->mon->my + c->mon->mh)
+dwm.c:		c->y = c->mon->my + c->mon->mh - HEIGHT(c);
+dwm.c:	c->x = MAX(c->x, c->mon->mx);
+dwm.c:	c->y = MAX(c->y, ((c->mon->by == c->mon->my) && (c->x + (c->w / 2) >= c->mon->wx)
+dwm.c:		&& (c->x + (c->w / 2) < c->mon->wx + c->mon->ww)) ? bh : c->mon->my);
+dwm.c:	c->bw = borderpx;
+dwm.c:	wc.border_width = c->bw;
+dwm.c: 	c->x = c->mon->mx + (c->mon->mw - WIDTH(c)) / 2;
+dwm.c:	c->y = c->mon->my + (c->mon->mh - HEIGHT(c)) / 2;
+dwm.c:	if (!c->isfloating)
+dwm.c:		c->isfloating = c->oldstate = trans != None || c->isfixed;
+dwm.c:	if (c->isfloating)
+dwm.c:		XRaiseWindow(dpy, c->win);
+dwm.c:		(unsigned char *) &(c->win), 1);
+dwm.c:	XMoveResizeWindow(dpy, c->win, c->x + 2 * sw, c->y, c->w, c->h); /* some windows require this */
+dwm.c:	if (c->mon == selmon)
+dwm.c:	c->mon->sel = c;
+dwm.c:	arrange(c->mon);
+dwm.c:	XMapWindow(dpy, c->win);
+dwm.c:	for (c = m->cl->clients; c; c = c->next)
+dwm.c:	for (c = nexttiled(m->cl->clients, m); c; c = nexttiled(c->next, m))
+dwm.c:		resize(c, m->wx, m->wy, m->ww - 2 * c->bw, m->wh - 2 * c->bw, 0);
+dwm.c:	if (c->isfullscreen) /* no support moving fullscreen windows by mouse */
+dwm.c:	ocx = c->x;
+dwm.c:	ocy = c->y;
+dwm.c:			if (!c->isfloating && selmon->lt[selmon->sellt]->arrange
+dwm.c:			&& (abs(nx - c->x) > snap || abs(ny - c->y) > snap))
+dwm.c:			if (!selmon->lt[selmon->sellt]->arrange || c->isfloating)
+dwm.c:				resize(c, nx, ny, c->w, c->h, 1);
+dwm.c:	if ((m = recttomon(c->x, c->y, c->w, c->h)) != selmon) {
+dwm.c:	for (; c && (c->isfloating || !ISVISIBLE(c, m)); c = c->next);
+dwm.c:	arrange(c->mon);
+dwm.c:			updatesystrayicongeom(c, c->w, c->h);
+dwm.c:			if (!c->isfloating && (XGetTransientForHint(dpy, c->win, &trans)) &&
+dwm.c:				(c->isfloating = (wintoclient(trans)) != NULL))
+dwm.c:				arrange(c->mon);
+dwm.c:			if (c == c->mon->sel)
+dwm.c:				drawbar(c->mon);
+dwm.c:			if (c == c->mon->sel)
+dwm.c:				drawbar(c->mon);
+dwm.c:		sel->next = c->next;
+dwm.c:		c->next = sel;
+dwm.c:			for(c = selmon->cl->clients; c->next != sel->next; c = c->next);
+dwm.c:			c->next = sel;
+dwm.c:		for(c = sel; c->next; c = c->next);
+dwm.c:		c->next = sel;
+dwm.c:	c->oldx = c->x; c->x = wc.x = x;
+dwm.c:	c->oldy = c->y; c->y = wc.y = y;
+dwm.c:	c->oldw = c->w; c->w = wc.width = w;
+dwm.c:	c->oldh = c->h; c->h = wc.height = h;
+dwm.c:	wc.border_width = c->bw;
+dwm.c:	for (n = 0, nbc = nexttiled(selmon->cl->clients, c->mon); nbc; nbc = nexttiled(nbc->next, c->mon), n++);
+dwm.c:	if (c->isfloating || selmon->lt[selmon->sellt]->arrange == NULL) {
+dwm.c:			c->w = wc.width += c->bw * 2;
+dwm.c:			c->h = wc.height += c->bw * 2;
+dwm.c:	XConfigureWindow(dpy, c->win, CWX|CWY|CWWidth|CWHeight|CWBorderWidth, &wc);
+dwm.c:	if (c->isfullscreen) /* no support resizing fullscreen windows by mouse */
+dwm.c:	ocx = c->x;
+dwm.c:	ocy = c->y;
+dwm.c:	XWarpPointer(dpy, None, c->win, 0, 0, 0, 0, c->w + c->bw - 1, c->h + c->bw - 1);
+dwm.c:			nw = MAX(ev.xmotion.x - ocx - 2 * c->bw + 1, 1);
+dwm.c:			nh = MAX(ev.xmotion.y - ocy - 2 * c->bw + 1, 1);
+dwm.c:			if (c->mon->wx + nw >= selmon->wx && c->mon->wx + nw <= selmon->wx + selmon->ww
+dwm.c:			&& c->mon->wy + nh >= selmon->wy && c->mon->wy + nh <= selmon->wy + selmon->wh)
+dwm.c:				if (!c->isfloating && selmon->lt[selmon->sellt]->arrange
+dwm.c:				&& (abs(nw - c->w) > snap || abs(nh - c->h) > snap))
+dwm.c:			if (!selmon->lt[selmon->sellt]->arrange || c->isfloating)
+dwm.c:				resize(c, c->x, c->y, nw, nh, 1);
+dwm.c:	XWarpPointer(dpy, None, c->win, 0, 0, 0, 0, c->w + c->bw - 1, c->h + c->bw - 1);
+dwm.c:	if ((m = recttomon(c->x, c->y, c->w, c->h)) != selmon) {
+dwm.c:		for (c = m->cl->stack; c; c = c->snext)
+dwm.c:			if (!c->isfloating && ISVISIBLE(c, m)) {
+dwm.c:				XConfigureWindow(dpy, c->win, CWSibling|CWStackMode, &wc);
+dwm.c:				wc.sibling = c->win;
+dwm.c:	if (c->mon == m)
+dwm.c:	c->mon = m;
+dwm.c:	c->tags = m->tagset[m->seltags]; /* assign tags of target monitor */
+dwm.c:	XChangeProperty(dpy, c->win, wmatom[WMState], wmatom[WMState], 32,
+dwm.c:	if (!c->neverfocus) {
+dwm.c:		XSetInputFocus(dpy, c->win, RevertToPointerRoot, CurrentTime);
+dwm.c:			(unsigned char *) &(c->win), 1);
+dwm.c:	sendevent(c->win, wmatom[WMTakeFocus], NoEventMask, wmatom[WMTakeFocus], CurrentTime, 0, 0, 0);
+dwm.c:	if (fullscreen && !c->isfullscreen) {
+dwm.c:		XChangeProperty(dpy, c->win, netatom[NetWMState], XA_ATOM, 32,
+dwm.c:		c->isfullscreen = 1;
+dwm.c:		c->oldstate = c->isfloating;
+dwm.c:		c->oldbw = c->bw;
+dwm.c:		c->bw = 0;
+dwm.c:		c->isfloating = 1;
+dwm.c:		resizeclient(c, c->mon->mx, c->mon->my, c->mon->mw, c->mon->mh);
+dwm.c:		XRaiseWindow(dpy, c->win);
+dwm.c:	} else if (!fullscreen && c->isfullscreen){
+dwm.c:		XChangeProperty(dpy, c->win, netatom[NetWMState], XA_ATOM, 32,
+dwm.c:		c->isfullscreen = 0;
+dwm.c:		c->isfloating = c->oldstate;
+dwm.c:		c->bw = c->oldbw;
+dwm.c:		c->x = c->oldx;
+dwm.c:		c->y = c->oldy;
+dwm.c:		c->w = c->oldw;
+dwm.c:		c->h = c->oldh;
+dwm.c:		resizeclient(c, c->x, c->y, c->w, c->h);
+dwm.c:		arrange(c->mon);
+dwm.c:	f = arg->f + c->cfact;
+dwm.c:	c->cfact = f;
+dwm.c:	c->isurgent = urg;
+dwm.c:	if (!(wmh = XGetWMHints(dpy, c->win)))
+dwm.c:	XSetWMHints(dpy, c->win, wmh);
+dwm.c:	if (ISVISIBLE(c, c->mon)) {
+dwm.c:		XMoveWindow(dpy, c->win, c->x, c->y);
+dwm.c:		if ((!c->mon->lt[c->mon->sellt]->arrange || c->isfloating) && !c->isfullscreen)
+dwm.c:			resize(c, c->x, c->y, c->w, c->h, 0);
+dwm.c:		showhide(c->snext);
+dwm.c:		showhide(c->snext);
+dwm.c:		XMoveWindow(dpy, c->win, WIDTH(c) * -2, c->y);
+dwm.c:	if (c->icon) {
+dwm.c:		XRenderFreePicture(dpy, c->icon);
+dwm.c:		c->icon = None;
+dwm.c:	XSetWindowBorder(dpy, c->win, scheme[SchemeNorm][ColBorder].pixel);
+dwm.c:	Monitor *m = c->mon;
+dwm.c:		wc.border_width = c->oldbw;
+dwm.c:		XConfigureWindow(dpy, c->win, CWBorderWidth, &wc); /* restore border */
+dwm.c:		XUngrabButton(dpy, AnyButton, AnyModifier, c->win);
+dwm.c:	c->icon = geticonprop(c->win, &c->icw, &c->ich);
+dwm.c:		XMapRaised(dpy, c->win);
+dwm.c:		for (c = m->cl->clients; c; c = c->next)
+dwm.c:				(unsigned char *) &(c->win), 1);
+dwm.c:				for (c = m->cl->clients; c; c = c->next) {
+dwm.c:					if (c->mon == m)
+dwm.c:						c->mon = selmon;
+dwm.c:	if (!XGetWMNormalHints(dpy, c->win, &size, &msize))
+dwm.c:		c->basew = size.base_width;
+dwm.c:		c->baseh = size.base_height;
+dwm.c:		c->basew = size.min_width;
+dwm.c:		c->baseh = size.min_height;
+dwm.c:		c->basew = c->baseh = 0;
+dwm.c:		c->incw = size.width_inc;
+dwm.c:		c->inch = size.height_inc;
+dwm.c:		c->incw = c->inch = 0;
+dwm.c:		c->maxw = size.max_width;
+dwm.c:		c->maxh = size.max_height;
+dwm.c:		c->maxw = c->maxh = 0;
+dwm.c:		c->minw = size.min_width;
+dwm.c:		c->minh = size.min_height;
+dwm.c:		c->minw = size.base_width;
+dwm.c:		c->minh = size.base_height;
+dwm.c:		c->minw = c->minh = 0;
+dwm.c:		c->mina = (float)size.min_aspect.y / size.min_aspect.x;
+dwm.c:		c->maxa = (float)size.max_aspect.x / size.max_aspect.y;
+dwm.c:		c->maxa = c->mina = 0.0;
+dwm.c:	c->isfixed = (c->maxw && c->maxh && c->maxw == c->minw && c->maxh == c->minh);
+dwm.c:	if (!gettextprop(c->win, netatom[NetWMName], c->name, sizeof c->name))
+dwm.c:		gettextprop(c->win, XA_WM_NAME, c->name, sizeof c->name);
+dwm.c:	if (c->name[0] == '\0') /* hack to mark broken clients */
+dwm.c:		strcpy(c->name, broken);
+dwm.c:		c->isfloating = 1;
+dwm.c:	if ((wmh = XGetWMHints(dpy, c->win))) {
+dwm.c:			XSetWMHints(dpy, c->win, wmh);
+dwm.c:			c->isurgent = (wmh->flags & XUrgencyHint) ? 1 : 0;
+dwm.c:			c->neverfocus = !wmh->input;
+dwm.c:			c->neverfocus = 0;
+dwm.c:		for (c = m->cl->clients; c; c = c->next)
+dwm.c:			if (c->win == w)
+dwm.c:		return c->mon;
+dwm.c:		if (!c || !(c = nexttiled(c->next, selmon)))
+vanitygaps.c:	for (n = 0, c = nexttiled(m->cl->clients, m); c; c = nexttiled(c->next, m), n++);
+vanitygaps.c:	for (n = 0, c = nexttiled(m->cl->clients, m); c; c = nexttiled(c->next, m), n++)
+vanitygaps.c:			mfacts += c->cfact;
+vanitygaps.c:			sfacts += c->cfact;
+vanitygaps.c:	for (n = 0, c = nexttiled(m->cl->clients, m); c; c = nexttiled(c->next, m), n++)
+vanitygaps.c:			mtotal += msize * (c->cfact / mfacts);
+vanitygaps.c:			stotal += ssize * (c->cfact / sfacts);
+vanitygaps.c:// 	for (i = 0, c = nexttiled(m->cl->clients, m); c; c = nexttiled(c->next, m), i++) {
+vanitygaps.c:// 			resize(c, mx, my, mw * (c->cfact / mfacts) + (i < mrest ? 1 : 0) - (2*c->bw), mh - (2*c->bw), 0);
+vanitygaps.c:// 			resize(c, sx, sy, sw * (c->cfact / sfacts) + ((i - m->nmaster) < srest ? 1 : 0) - (2*c->bw), sh - (2*c->bw), 0);
+vanitygaps.c:// 	for (i = 0, c = nexttiled(m->cl->clients, m); c; c = nexttiled(c->next, m), i++) {
+vanitygaps.c:// 			resize(c, mx, my, mw * (c->cfact / mfacts) + (i < mrest ? 1 : 0) - (2*c->bw), mh - (2*c->bw), 0);
+vanitygaps.c:// 			resize(c, sx, sy, sw - (2*c->bw), sh * (c->cfact / sfacts) + ((i - m->nmaster) < srest ? 1 : 0) - (2*c->bw), 0);
+vanitygaps.c:	for (n = 0, c = nexttiled(m->cl->clients, m); c; c = nexttiled(c->next, m), n++) {
+vanitygaps.c:			mfacts += c->cfact;
+vanitygaps.c:			lfacts += c->cfact; // total factor of left hand stack area
+vanitygaps.c:			rfacts += c->cfact; // total factor of right hand stack area
+vanitygaps.c:	for (n = 0, c = nexttiled(m->cl->clients, m); c; c = nexttiled(c->next, m), n++)
+vanitygaps.c:			mtotal += mh * (c->cfact / mfacts);
+vanitygaps.c:			ltotal += lh * (c->cfact / lfacts);
+vanitygaps.c:			rtotal += rh * (c->cfact / rfacts);
+vanitygaps.c:	for (i = 0, c = nexttiled(m->cl->clients, m); c; c = nexttiled(c->next, m), i++) {
+vanitygaps.c:			resize(c, mx, my, mw - (2*c->bw), mh * (c->cfact / mfacts) + (i < mrest ? 1 : 0) - (2*c->bw), 0);
+vanitygaps.c:				resize(c, lx, ly, lw - (2*c->bw), lh * (c->cfact / lfacts) + ((i - 2*m->nmaster) < 2*lrest ? 1 : 0) - (2*c->bw), 0);
+vanitygaps.c:				resize(c, rx, ry, rw - (2*c->bw), rh * (c->cfact / rfacts) + ((i - 2*m->nmaster) < 2*rrest ? 1 : 0) - (2*c->bw), 0);
+vanitygaps.c:	for (i = 0, c = nexttiled(m->cl->clients, m); c; c = nexttiled(c->next, m), i++)
+vanitygaps.c:			resize(c, mx, my, mw * (c->cfact / mfacts) + (i < mrest ? 1 : 0) - (2*c->bw), mh - (2*c->bw), 0);
+vanitygaps.c:			resize(c, sx, sy, sw * (c->cfact / sfacts) + ((i - m->nmaster) < srest ? 1 : 0) - (2*c->bw), sh - (2*c->bw), 0);
+vanitygaps.c:	for (i = 0, c = nexttiled(m->cl->clients, m); c; c = nexttiled(c->next, m), i++)
+vanitygaps.c:			resize(c, mx, my, mw - (2*c->bw), mh * (c->cfact / mfacts) + (i < mrest ? 1 : 0) - (2*c->bw), 0);
+vanitygaps.c:			resize(c, sx, sy, sw - (2*c->bw), sh - (2*c->bw), 0);
+vanitygaps.c:	for (i = 0, c = nexttiled(m->cl->clients, m); c; c = nexttiled(c->next, m)) {
+vanitygaps.c:			if ((i % 2 && (nh - ih) / 2 <= (bh + 2*c->bw))
+vanitygaps.c:			   || (!(i % 2) && (nw - iv) / 2 <= (bh + 2*c->bw))) {
+vanitygaps.c:		resize(c, nx, ny, nw - (2*c->bw), nh - (2*c->bw), False);
+vanitygaps.c:	for (i = 0, c = nexttiled(m->cl->clients, m); c; i++, c = nexttiled(c->next, m)) {
+vanitygaps.c:			cw + (cn < crest ? 1 : 0) - 2*c->bw,
+vanitygaps.c:			ch + (rn < rrest ? 1 : 0) - 2*c->bw,
+vanitygaps.c:	for (i = 0, c = nexttiled(m->cl->clients, m); c; c = nexttiled(c->next, m), i++) {
+vanitygaps.c:		resize(c, cx, cy, cw + (cc < cwrest ? 1 : 0) - 2*c->bw, ch + (cr < chrest ? 1 : 0) - 2*c->bw, False);
+vanitygaps.c:	for (i = 0, c = nexttiled(m->cl->clients, m); c; c = nexttiled(c->next, m), i++)
+vanitygaps.c:			mfacts += c->cfact;
+vanitygaps.c:			sfacts += c->cfact;
+vanitygaps.c:	for (i = 0, c = nexttiled(m->cl->clients, m); c; c = nexttiled(c->next, m), i++)
+vanitygaps.c:			mtotal += mh * (c->cfact / mfacts);
+vanitygaps.c:			stotal += sw * (c->cfact / sfacts);
+vanitygaps.c:	for (i = 0, c = nexttiled(m->cl->clients, m); c; c = nexttiled(c->next, m), i++)
+vanitygaps.c:			resize(c, mx, my, mw * (c->cfact / mfacts) + (i < mrest ? 1 : 0) - (2*c->bw), mh - (2*c->bw), 0);
+vanitygaps.c:			resize(c, sx, sy, sw * (c->cfact / sfacts) + ((i - ntop) < srest ? 1 : 0) - (2*c->bw), sh - (2*c->bw), 0);
+vanitygaps.c:	for (c = nexttiled(m->cl->clients, m); c; c = nexttiled(c->next, m), ci++) {
+vanitygaps.c:		resize(c, cx, cy, cw - (2*c->bw), ch - (2*c->bw), 0);
+vanitygaps.c:	for (i = 0, c = nexttiled(m->cl->clients, m); c; c = nexttiled(c->next, m), i++)
+vanitygaps.c:			resize(c, mx, my, mw - (2*c->bw), mh * (c->cfact / mfacts) + (i < mrest ? 1 : 0) - (2*c->bw), 0);
+vanitygaps.c:			resize(c, sx, sy, sw - (2*c->bw), sh * (c->cfact / sfacts) + ((i - m->nmaster) < srest ? 1 : 0) - (2*c->bw), 0);
